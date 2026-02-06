@@ -21,12 +21,10 @@ jobs:
           flutter-version: '3.22.0'
           channel: stable
           cache: true
-      - name: Install dependencies
+      - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config ninja-build
-      - name: 切换到项目目录
-        run: cd simple_live  # 这里是项目实际根目录
       - name: Get Flutter dependencies
         run: flutter pub get
       - name: Clean build
@@ -38,7 +36,7 @@ jobs:
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
           echo "storeFile=../key.jks" >> android/key.properties
-      - name: Write keystore
+      - name: Write keystore file
         run: |
           echo "${{ secrets.KEYSTORE_FILE }}" | base64 -d > android/key.jks
       - name: Build APK
